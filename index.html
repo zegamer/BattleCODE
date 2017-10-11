@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<!-- Has to be a script to send the POST request -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script>
+			function join(){
+				document.getElementById("display").innerHTML = "Enter invite code and stuff... Show next page";
+			}
+			function invite(){
+				document.getElementById("display").innerHTML = "Show a new invite code... Show next page"
+			}
+			function loadDoc() {
+				document.getElementById("display").innerHTML = "Trying to send something";	
+				
+				/*var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange=function() {
+					if (this.readyState == 4 && this.status == 200) {
+						document.getElementById("demo").innerHTML = this.responseText;
+					}
+				};
+				xhttp.open("GET", "http://localhost:8080/index.js", true);
+				var obj = JSON.stringify({"user":"testUser","code":"abcd"});
+				xhttp.send(obj);*/
+				
+				$.ajax({
+					url:"http://localhost:8080/public/post.html",
+					type:'POST',
+					dataType:'json',
+					data:{"user":"testUser","code":"abcd"},
+					error: function(xhr){
+            alert("An error occured: " + xhr.status + " " + xhr.statusText);
+        },
+					/*error: function (request, error) {
+        			console.log(arguments);
+        			alert(" Can't do because: " + error);
+    				},*/
+					success: function(data) {
+						alert(data);
+					}
+				});
+			}
+		</script>
+	</head>
+	<body>
+		<h1>BattleCODE</h1>
+		<p>Yo there! Welcome to BattleCODE</p><br>
+		<button onclick="join()">Join a battle</button>
+		<button onclick="invite()">Invite someone to battle</button>
+		<button onclick="loadDoc()">Try new</button>
+		<p id="display"></p>
+	</body>
+</html>
